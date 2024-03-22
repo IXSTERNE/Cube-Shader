@@ -6,8 +6,7 @@ import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 // import { RGBShiftShader } from 'three/addons/shaders/RGBShiftShader.js';
-// import { FilmShader } from '/FilmShader.js';
-// import { StaticNoiseShader} from '/StaticNoiseShader.js';
+// import { FilmShader } from '../shaders/FilmShader.js';
 import { CathodeRayTubeShader } from '../shaders/CathodeRayTubeShader.js';
 
 const scene = new THREE.Scene();
@@ -25,7 +24,10 @@ const material = new THREE.MeshBasicMaterial({color: 0xE2A801});
 const cube = new THREE.Mesh(geometry, material);
 scene.add(cube);
 
-camera.position.z = 2;
+// const axesHelper = new THREE.AxesHelper(5);
+// scene.add(axesHelper);
+
+camera.position.z = 4;
 
 //------------------------------------- FX ------------------------------------------//
 
@@ -33,9 +35,6 @@ const composer = new EffectComposer(renderer);
 
 const renderPass = new RenderPass(scene, camera);
 composer.addPass(renderPass);
-
-// const rgbShader = new ShaderPass(RGBShiftShader);
-// composer.addPass(rgbShader);
 
 // const filmShader = new ShaderPass(FilmShader);
 // composer.addPass(filmShader);
@@ -55,9 +54,10 @@ function animate(){
 
     cube.rotation.x += 0.01;
     cube.rotation.y += 0.01;
+    cube.rotation.z += 0.01;
 
     // renderer.render(scene, camera);
 
-    composer.render();
+    composer.render(0.01);
 }
 animate();
